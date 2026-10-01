@@ -1,0 +1,1194 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="AgentHub platform administration" />
+    <title>AgentHub Admin</title>
+    <!-- Tailwind v4 browser build; dark utilities follow the app's .dark class. -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+      @custom-variant dark (&:where(.dark, .dark *));
+    </style>
+  </head>
+  <body
+    class="h-full bg-neutral-50 font-sans text-neutral-900 antialiased dark:bg-neutral-950 dark:text-neutral-100"
+  >
+    <div class="min-h-full md:flex">
+      <!-- Persistent primary navigation -->
+      <aside
+        class="w-full border-b border-neutral-200 bg-white md:fixed md:inset-y-0 md:left-0 md:w-64 md:border-b-0 md:border-r dark:border-neutral-800 dark:bg-neutral-900"
+      >
+        <div class="flex h-16 items-center gap-3 px-5">
+          <span
+            aria-hidden="true"
+            class="flex h-8 w-8 items-center justify-center rounded bg-neutral-900 text-sm font-bold text-white dark:bg-white dark:text-neutral-900"
+            >A</span
+          >
+          <span class="text-base font-semibold tracking-tight">AgentHub</span>
+          <span class="ml-auto text-xs text-neutral-500">ADMIN</span>
+        </div>
+        <nav
+          aria-label="Primary navigation"
+          class="flex gap-1 overflow-x-auto px-3 pb-3 md:block md:space-y-1 md:px-3 md:py-5"
+        >
+          <button
+            type="button"
+            data-view="dashboard"
+            aria-current="page"
+            class="nav-link shrink-0 rounded px-3 py-2 text-left text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-700 md:w-full"
+          >
+            Dashboard
+          </button>
+          <button
+            type="button"
+            data-view="users"
+            class="nav-link shrink-0 rounded px-3 py-2 text-left text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-700 md:w-full"
+          >
+            User Management
+          </button>
+          <button
+            type="button"
+            data-view="agents"
+            class="nav-link shrink-0 rounded px-3 py-2 text-left text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-700 md:w-full"
+          >
+            Agent Management
+          </button>
+          <button
+            type="button"
+            data-view="skills"
+            class="nav-link shrink-0 rounded px-3 py-2 text-left text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-700 md:w-full"
+          >
+            Skills
+          </button>
+          <button
+            type="button"
+            data-view="contracts"
+            class="nav-link shrink-0 rounded px-3 py-2 text-left text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-700 md:w-full"
+          >
+            Agent Contracts
+          </button>
+          <button
+            type="button"
+            data-view="errors"
+            class="nav-link shrink-0 rounded px-3 py-2 text-left text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-700 md:w-full"
+          >
+            Error Log
+          </button>
+        </nav>
+      </aside>
+
+      <!-- Main application area and persistent top bar -->
+      <div class="min-w-0 flex-1 md:ml-64">
+        <header
+          class="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-neutral-200 bg-white/95 px-5 backdrop-blur-sm dark:border-neutral-800 dark:bg-neutral-900/95 md:px-8"
+        >
+          <h1 id="page-title" class="text-lg font-semibold tracking-tight">
+            Dashboard
+          </h1>
+          <button
+            id="theme-toggle"
+            type="button"
+            aria-pressed="false"
+            class="inline-flex min-h-10 items-center gap-2 rounded border border-neutral-300 px-3 text-sm font-medium hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-700 dark:border-neutral-700 dark:hover:bg-neutral-800"
+          >
+            <span aria-hidden="true">◐</span
+            ><span id="theme-label">Dark mode</span>
+          </button>
+        </header>
+
+        <main class="mx-auto max-w-7xl p-5 md:p-8">
+          <!-- Dashboard view -->
+          <section
+            id="view-dashboard"
+            data-section="dashboard"
+            aria-labelledby="dashboard-heading"
+            class="view space-y-7"
+          >
+            <div>
+              <h2
+                id="dashboard-heading"
+                class="text-2xl font-semibold tracking-tight"
+              >
+                Business overview
+              </h2>
+              <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Key platform metrics for this month.
+              </p>
+            </div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <article
+                class="rounded border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900"
+              >
+                <div class="flex items-center justify-between">
+                  <h3
+                    class="text-sm font-medium text-neutral-600 dark:text-neutral-300"
+                  >
+                    Total revenue this month
+                  </h3>
+                  <span aria-hidden="true" class="text-lg text-neutral-500"
+                    >＄</span
+                  >
+                </div>
+                <p class="mt-4 text-2xl font-semibold">$84,250</p>
+              </article>
+              <article
+                class="rounded border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900"
+              >
+                <div class="flex items-center justify-between">
+                  <h3
+                    class="text-sm font-medium text-neutral-600 dark:text-neutral-300"
+                  >
+                    Discount / coupon losses
+                  </h3>
+                  <span aria-hidden="true" class="text-lg text-neutral-500"
+                    >−</span
+                  >
+                </div>
+                <p class="mt-4 text-2xl font-semibold">$3,420</p>
+              </article>
+              <article
+                class="rounded border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900"
+              >
+                <div class="flex items-center justify-between">
+                  <h3
+                    class="text-sm font-medium text-neutral-600 dark:text-neutral-300"
+                  >
+                    Active agents
+                  </h3>
+                  <span aria-hidden="true" class="text-lg text-neutral-500"
+                    >◆</span
+                  >
+                </div>
+                <p class="mt-4 text-2xl font-semibold">128</p>
+              </article>
+              <article
+                class="rounded border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900"
+              >
+                <div class="flex items-center justify-between">
+                  <h3
+                    class="text-sm font-medium text-neutral-600 dark:text-neutral-300"
+                  >
+                    Failing agents
+                  </h3>
+                  <span
+                    aria-hidden="true"
+                    class="text-lg font-semibold text-red-700 dark:text-red-400"
+                    >!</span
+                  >
+                </div>
+                <p
+                  class="mt-4 text-2xl font-semibold text-red-800 dark:text-red-300"
+                >
+                  3
+                  <span class="text-sm font-medium">agents need attention</span>
+                </p>
+              </article>
+            </div>
+            <div
+              class="flex min-h-64 flex-col items-center justify-center rounded border-2 border-dashed border-neutral-300 bg-white px-6 text-center dark:border-neutral-700 dark:bg-neutral-900"
+            >
+              <h3 class="font-semibold">Weekly activity</h3>
+              <p class="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
+                Static placeholder — activity chart is not connected.
+              </p>
+            </div>
+          </section>
+
+          <!-- User Management view -->
+          <section
+            id="view-users"
+            data-section="users"
+            aria-labelledby="users-heading"
+            class="view hidden space-y-6"
+          >
+            <div>
+              <h2
+                id="users-heading"
+                class="text-2xl font-semibold tracking-tight"
+              >
+                User Management
+              </h2>
+              <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Manage platform accounts and plans.
+              </p>
+            </div>
+            <div
+              class="overflow-x-auto rounded border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900"
+            >
+              <table class="min-w-[760px] w-full text-left text-sm">
+                <caption class="sr-only">
+                  Platform users
+                </caption>
+                <thead
+                  class="border-b border-neutral-200 text-xs uppercase tracking-wide text-neutral-500 dark:border-neutral-800 dark:text-neutral-400"
+                >
+                  <tr>
+                    <th scope="col" class="px-5 py-3">Name</th>
+                    <th scope="col" class="px-5 py-3">Email</th>
+                    <th scope="col" class="px-5 py-3">Plan</th>
+                    <th scope="col" class="px-5 py-3">Status</th>
+                    <th scope="col" class="px-5 py-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="users-body"
+                  class="divide-y divide-neutral-200 dark:divide-neutral-800"
+                ></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Agent Management view -->
+          <section
+            id="view-agents"
+            data-section="agents"
+            aria-labelledby="agents-heading"
+            class="view hidden space-y-6"
+          >
+            <div>
+              <h2
+                id="agents-heading"
+                class="text-2xl font-semibold tracking-tight"
+              >
+                Agent Management
+              </h2>
+              <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Review configured agents, owners, and capabilities.
+              </p>
+            </div>
+            <div
+              class="overflow-x-auto rounded border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900"
+            >
+              <table class="min-w-[800px] w-full text-left text-sm">
+                <caption class="sr-only">
+                  Configured agents
+                </caption>
+                <thead
+                  class="border-b border-neutral-200 text-xs uppercase tracking-wide text-neutral-500 dark:border-neutral-800 dark:text-neutral-400"
+                >
+                  <tr>
+                    <th scope="col" class="px-5 py-3">Agent</th>
+                    <th scope="col" class="px-5 py-3">Owner</th>
+                    <th scope="col" class="px-5 py-3">Status</th>
+                    <th scope="col" class="px-5 py-3">Skills</th>
+                    <th scope="col" class="px-5 py-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="agents-body"
+                  class="divide-y divide-neutral-200 dark:divide-neutral-800"
+                ></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Skills catalog view -->
+          <section
+            id="view-skills"
+            data-section="skills"
+            aria-labelledby="skills-heading"
+            class="view hidden space-y-6"
+          >
+            <div>
+              <h2
+                id="skills-heading"
+                class="text-2xl font-semibold tracking-tight"
+              >
+                Skills
+              </h2>
+              <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Reusable capabilities available to configured agents.
+              </p>
+            </div>
+            <aside
+              aria-label="About skills"
+              class="rounded border border-neutral-200 bg-neutral-100 px-4 py-3 text-sm text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
+            >
+              <strong>About skills</strong
+              ><span class="ml-1"
+                >A skill is a reusable capability that can be attached to an
+                agent and included in a client contract.</span
+              >
+            </aside>
+            <div
+              id="skills-grid"
+              class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
+            ></div>
+          </section>
+
+          <!-- Agent Contracts view -->
+          <section
+            id="view-contracts"
+            data-section="contracts"
+            aria-labelledby="contracts-heading"
+            class="view hidden space-y-6"
+          >
+            <div>
+              <h2
+                id="contracts-heading"
+                class="text-2xl font-semibold tracking-tight"
+              >
+                Agent Contracts
+              </h2>
+              <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Client agreements, included skills, and payments.
+              </p>
+            </div>
+            <div
+              class="overflow-x-auto rounded border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900"
+            >
+              <table class="min-w-[1120px] w-full text-left text-sm">
+                <caption class="sr-only">
+                  Agent contracts
+                </caption>
+                <thead
+                  class="border-b border-neutral-200 text-xs uppercase tracking-wide text-neutral-500 dark:border-neutral-800 dark:text-neutral-400"
+                >
+                  <tr>
+                    <th scope="col" class="px-4 py-3">Contract ID</th>
+                    <th scope="col" class="px-4 py-3">Client</th>
+                    <th scope="col" class="px-4 py-3">Agent</th>
+                    <th scope="col" class="px-4 py-3">Skills</th>
+                    <th scope="col" class="px-4 py-3">Start</th>
+                    <th scope="col" class="px-4 py-3">End</th>
+                    <th scope="col" class="px-4 py-3">Paid</th>
+                    <th scope="col" class="px-4 py-3">Status</th>
+                    <th scope="col" class="px-4 py-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="contracts-body"
+                  class="divide-y divide-neutral-200 dark:divide-neutral-800"
+                ></tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Error Log view -->
+          <section
+            id="view-errors"
+            data-section="errors"
+            aria-labelledby="errors-heading"
+            class="view hidden space-y-6"
+          >
+            <div>
+              <h2
+                id="errors-heading"
+                class="text-2xl font-semibold tracking-tight"
+              >
+                Error Log
+              </h2>
+              <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+                Agent execution issues and resolution state.
+              </p>
+            </div>
+            <div
+              id="errors-list"
+              class="overflow-hidden rounded border border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900"
+            ></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- One shared accessible dialog is populated for details and confirmations. -->
+    <div
+      id="dialog-backdrop"
+      class="fixed inset-0 z-40 hidden items-center justify-center overflow-y-auto bg-neutral-950/50 p-4"
+      aria-hidden="true"
+    >
+      <section
+        id="dialog-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dialog-title"
+        tabindex="-1"
+        class="my-auto max-h-[90vh] w-full max-w-xl overflow-y-auto rounded border border-neutral-300 bg-white p-6 shadow-xl dark:border-neutral-700 dark:bg-neutral-900"
+      >
+        <div class="mb-5 flex items-start justify-between gap-4">
+          <h2 id="dialog-title" class="text-lg font-semibold">Details</h2>
+          <button
+            id="dialog-close"
+            type="button"
+            aria-label="Close dialog"
+            class="rounded px-2 py-1 text-xl leading-none text-neutral-500 hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-700 dark:hover:bg-neutral-800"
+          >
+            ×
+          </button>
+        </div>
+        <div id="dialog-content" class="text-sm leading-6"></div>
+        <div id="dialog-actions" class="mt-6 flex justify-end gap-3"></div>
+      </section>
+    </div>
+    <div
+      id="toast"
+      role="status"
+      aria-live="polite"
+      class="fixed bottom-5 right-5 z-50 hidden max-w-sm rounded border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-white shadow-lg"
+    ></div>
+
+    <script>
+      // Hardcoded prototype records. Agent names and skill relationships are shared across views.
+      const skills = [
+        {
+          name: "Web Browsing",
+          description:
+            "Search and retrieve relevant information from the public web.",
+        },
+        {
+          name: "Document Reading",
+          description:
+            "Read, summarize, and extract structured information from documents.",
+        },
+        {
+          name: "Calendar Management",
+          description: "Review availability and coordinate calendar events.",
+        },
+        {
+          name: "Email Drafting",
+          description: "Prepare clear, contextual email drafts for review.",
+        },
+      ];
+      const agents = [
+        {
+          name: "Research Assistant",
+          owner: "Acme Analytics",
+          status: "Active",
+          skills: ["Web Browsing", "Document Reading"],
+          prompt:
+            "Research the requested topic using reliable sources. Summarize findings clearly and cite source URLs.",
+        },
+        {
+          name: "Document Analyst",
+          owner: "Northstar Legal",
+          status: "Active",
+          skills: ["Document Reading", "Email Drafting"],
+          prompt:
+            "Review supplied documents, identify key facts, and produce concise, accurate summaries.",
+        },
+        {
+          name: "Executive Scheduler",
+          owner: "BrightPath Health",
+          status: "Failing",
+          skills: ["Calendar Management", "Email Drafting"],
+          prompt:
+            "Help coordinate meetings based on stated priorities and calendar availability.",
+        },
+        {
+          name: "Sales Scout",
+          owner: "Acme Analytics",
+          status: "Inactive",
+          skills: ["Web Browsing", "Email Drafting"],
+          prompt:
+            "Research prospective accounts and prepare relevant outreach drafts for human review.",
+        },
+      ];
+      const users = [
+        {
+          name: "Olivia Chen",
+          email: "olivia.chen@acme.example",
+          plan: "Enterprise",
+          status: "Active",
+          company: "Acme Analytics",
+          joined: "2025-03-14",
+          agents: "Research Assistant, Sales Scout",
+        },
+        {
+          name: "Marcus Reed",
+          email: "marcus.reed@northstar.example",
+          plan: "Pro",
+          status: "Active",
+          company: "Northstar Legal",
+          joined: "2025-06-02",
+          agents: "Document Analyst",
+        },
+        {
+          name: "Priya Shah",
+          email: "priya.shah@brightpath.example",
+          plan: "Enterprise",
+          status: "Active",
+          company: "BrightPath Health",
+          joined: "2024-11-19",
+          agents: "Executive Scheduler",
+        },
+        {
+          name: "Ethan Brooks",
+          email: "ethan.brooks@fieldstone.example",
+          plan: "Starter",
+          status: "Pending",
+          company: "Fieldstone Co.",
+          joined: "2026-01-08",
+          agents: "None",
+        },
+        {
+          name: "Sofia Martinez",
+          email: "sofia.martinez@acme.example",
+          plan: "Pro",
+          status: "Suspended",
+          company: "Acme Analytics",
+          joined: "2025-09-27",
+          agents: "Sales Scout",
+        },
+      ];
+      const contracts = [
+        {
+          id: "AH-2026-1042",
+          client: "Acme Analytics",
+          agent: "Research Assistant",
+          skills: [
+            { name: "Web Browsing", price: 1200 },
+            { name: "Document Reading", price: 800 },
+          ],
+          start: "2026-08-01",
+          end: "2026-12-31",
+          status: "Active",
+        },
+        {
+          id: "AH-2026-1038",
+          client: "Northstar Legal",
+          agent: "Document Analyst",
+          skills: [
+            { name: "Document Reading", price: 1500 },
+            { name: "Email Drafting", price: 500 },
+          ],
+          start: "2026-07-01",
+          end: "2026-10-31",
+          status: "Active",
+        },
+        {
+          id: "AH-2025-0881",
+          client: "BrightPath Health",
+          agent: "Executive Scheduler",
+          skills: [
+            { name: "Calendar Management", price: 1000 },
+            { name: "Email Drafting", price: 450 },
+          ],
+          start: "2025-04-01",
+          end: "2026-03-31",
+          status: "Past",
+        },
+        {
+          id: "AH-2025-0764",
+          client: "Acme Analytics",
+          agent: "Sales Scout",
+          skills: [
+            { name: "Web Browsing", price: 900 },
+            { name: "Email Drafting", price: 400 },
+          ],
+          start: "2025-01-01",
+          end: "2025-12-31",
+          status: "Past",
+        },
+      ];
+      const errors = [
+        {
+          id: "ERR-6012",
+          time: "2026-09-30 09:42 UTC",
+          agent: "Executive Scheduler",
+          severity: "Critical",
+          description:
+            "Calendar provider returned repeated authentication failures.",
+          resolved: false,
+          trace:
+            "CalendarConnectorError: OAuth token rejected (401)\n  at refresh_access_token (calendar/auth.js:84)\n  at list_availability (calendar/client.js:129)\n  Request: GET /v2/freebusy",
+        },
+        {
+          id: "ERR-6011",
+          time: "2026-09-30 08:16 UTC",
+          agent: "Research Assistant",
+          severity: "Warning",
+          description:
+            "A source page timed out while retrieving search results.",
+          resolved: false,
+          trace:
+            "FetchTimeoutError: request exceeded 15,000 ms\n  at fetch_page (browser/reader.js:52)\n  URL: https://example.org/report",
+        },
+        {
+          id: "ERR-6008",
+          time: "2026-09-29 17:03 UTC",
+          agent: "Document Analyst",
+          severity: "Warning",
+          description: "An uploaded document could not be parsed as text.",
+          resolved: true,
+          trace:
+            "DocumentParseError: unsupported encrypted PDF\n  at extract_text (documents/parser.js:117)\n  File: quarterly-review.pdf",
+        },
+        {
+          id: "ERR-6004",
+          time: "2026-09-29 11:28 UTC",
+          agent: "Sales Scout",
+          severity: "Information",
+          description:
+            "Search returned no results for the supplied company name.",
+          resolved: false,
+          trace:
+            "EmptySearchResult: zero matching pages\n  at search_web (browser/search.js:71)\n  Query: Example Company",
+        },
+        {
+          id: "ERR-5999",
+          time: "2026-09-28 15:51 UTC",
+          agent: "Executive Scheduler",
+          severity: "Critical",
+          description:
+            "Event creation failed because the selected time is no longer available.",
+          resolved: false,
+          trace:
+            "CalendarConflictError: HTTP 409\n  at create_event (calendar/client.js:201)\n  Event: Quarterly planning review",
+        },
+        {
+          id: "ERR-5991",
+          time: "2026-09-27 10:09 UTC",
+          agent: "Research Assistant",
+          severity: "Information",
+          description: "Response was retried after a temporary rate limit.",
+          resolved: true,
+          trace:
+            "RateLimitNotice: HTTP 429; retry succeeded after 2 seconds\n  at search_web (browser/search.js:65)\n  Provider: Search API",
+        },
+      ];
+
+      // Small shared helpers keep labels, escaping, badges, and currency presentation consistent.
+      const esc = (value) =>
+        String(value).replace(
+          /[&<>"']/g,
+          (char) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[char],
+        );
+      const money = (amount) =>
+        new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "USD",
+          maximumFractionDigits: 0,
+        }).format(amount);
+      const badge = (text, type = "neutral") => {
+        const styles = {
+          neutral:
+            "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200",
+          green:
+            "bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300",
+          amber:
+            "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300",
+          red: "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300",
+          blue: "bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300",
+        };
+        return `<span class="inline-flex items-center rounded px-2 py-0.5 text-xs font-medium ${styles[type]}">${esc(text)}</span>`;
+      };
+      const statusBadge = (status) =>
+        badge(
+          status,
+          status === "Active"
+            ? "green"
+            : status === "Failing"
+              ? "red"
+              : status === "Pending"
+                ? "amber"
+                : status === "Suspended" || status === "Cancelled"
+                  ? "red"
+                  : status === "Past"
+                    ? "neutral"
+                    : "neutral",
+        );
+      let openMenu = null;
+      let priorFocus = null;
+      let toastTimer;
+      const backdrop = document.getElementById("dialog-backdrop");
+      const panel = document.getElementById("dialog-panel");
+
+      // Render one accessible action menu at a time; actions are delegated below.
+      function menuButton(kind, id, label = "row") {
+        return `<div class="relative inline-block"><button type="button" class="menu-trigger rounded px-2 py-1 text-lg leading-none hover:bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-700 dark:hover:bg-neutral-800" aria-label="Actions for ${esc(label)}" aria-haspopup="true" aria-expanded="false" data-kind="${kind}" data-id="${esc(id)}">⋮</button><div class="action-menu absolute right-0 z-10 mt-1 hidden min-w-40 rounded border border-neutral-200 bg-white py-1 shadow-lg dark:border-neutral-700 dark:bg-neutral-900" role="menu" aria-label="Actions for ${esc(label)}"></div></div>`;
+      }
+      function renderUsers() {
+        document.getElementById("users-body").innerHTML = users
+          .map(
+            (user, index) =>
+              `<tr><th scope="row" class="whitespace-nowrap px-5 py-4 font-medium">${esc(user.name)}</th><td class="px-5 py-4 text-neutral-600 dark:text-neutral-300">${esc(user.email)}</td><td class="px-5 py-4">${esc(user.plan)}</td><td class="px-5 py-4">${badge(user.status, user.status === "Active" ? "green" : user.status === "Pending" ? "amber" : "red")}</td><td class="px-5 py-4 text-right">${menuButton("user", index, user.name)}</td></tr>`,
+          )
+          .join("");
+      }
+      function renderAgents() {
+        document.getElementById("agents-body").innerHTML = agents
+          .map(
+            (agent, index) =>
+              `<tr><th scope="row" class="whitespace-nowrap px-5 py-4 font-medium">${esc(agent.name)}</th><td class="px-5 py-4">${esc(agent.owner)}</td><td class="px-5 py-4">${statusBadge(agent.status)}</td><td class="px-5 py-4"><button type="button" class="skill-toggle inline-flex items-center gap-2 rounded text-sm text-neutral-700 underline decoration-neutral-400 underline-offset-4 hover:text-neutral-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-700 dark:text-neutral-300 dark:hover:text-white" aria-expanded="false" aria-controls="agent-skills-${index}" data-index="${index}">Show ${agent.skills.length} skills <span aria-hidden="true">⌄</span></button><div id="agent-skills-${index}" class="mt-0 max-h-0 overflow-hidden opacity-0 transition-all duration-300 motion-reduce:transition-none" aria-label="${esc(agent.name)} skills" aria-hidden="true" inert>${agent.skills.map((skill) => `<span class="mr-1 mt-2 inline-block rounded bg-neutral-100 px-2 py-1 text-xs dark:bg-neutral-800">${esc(skill)}</span>`).join("")}</div></td><td class="px-5 py-4 text-right">${menuButton("agent", index, agent.name)}</td></tr>`,
+          )
+          .join("");
+      }
+      function renderSkills() {
+        document.getElementById("skills-grid").innerHTML = skills
+          .map((skill, index) => {
+            const count = agents.filter((agent) =>
+              agent.skills.includes(skill.name),
+            ).length;
+            return `<article class="rounded border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900"><div class="flex items-start justify-between gap-3"><h3 class="font-semibold">${esc(skill.name)}</h3>${menuButton("skill", index, skill.name)}</div><p class="mt-3 min-h-12 text-sm leading-6 text-neutral-600 dark:text-neutral-300">${esc(skill.description)}</p><p class="mt-4 text-sm text-neutral-500 dark:text-neutral-400">Enabled on <strong class="text-neutral-800 dark:text-neutral-100">${count}</strong> agents</p></article>`;
+          })
+          .join("");
+      }
+      function contractTotal(contract) {
+        return contract.skills.reduce((sum, skill) => sum + skill.price, 0);
+      }
+      function renderContracts() {
+        document.getElementById("contracts-body").innerHTML = contracts
+          .map(
+            (contract, index) =>
+              `<tr><th scope="row" class="whitespace-nowrap px-4 py-4 font-mono text-xs">${esc(contract.id)}</th><td class="px-4 py-4">${esc(contract.client)}</td><td class="px-4 py-4">${esc(contract.agent)}</td><td class="max-w-52 px-4 py-4">${contract.skills.map((skill) => esc(skill.name)).join(", ")}</td><td class="whitespace-nowrap px-4 py-4">${esc(contract.start)}</td><td class="whitespace-nowrap px-4 py-4">${esc(contract.end)}</td><td class="whitespace-nowrap px-4 py-4">${money(contractTotal(contract))}</td><td class="px-4 py-4">${statusBadge(contract.status)}</td><td class="px-4 py-4 text-right">${menuButton("contract", index, contract.id)}</td></tr>`,
+          )
+          .join("");
+      }
+      function renderErrors() {
+        document.getElementById("errors-list").innerHTML = errors
+          .map(
+            (error, index) =>
+              `<article class="flex flex-col gap-4 border-b border-neutral-200 p-5 last:border-b-0 sm:flex-row sm:items-start sm:justify-between dark:border-neutral-800"><div class="min-w-0"><div class="flex flex-wrap items-center gap-2">${badge(error.severity, error.severity === "Critical" ? "red" : error.severity === "Warning" ? "amber" : "blue")}${error.resolved ? badge("Resolved", "green") : ""}<span class="font-medium">${esc(error.agent)}</span><span class="text-xs text-neutral-500 dark:text-neutral-400">${esc(error.id)}</span></div><p class="mt-2 text-sm">${esc(error.description)}</p><time class="mt-1 block text-xs text-neutral-500 dark:text-neutral-400">${esc(error.time)}</time></div><div class="shrink-0 self-end sm:self-start">${menuButton("error", index, error.id)}</div></article>`,
+          )
+          .join("");
+      }
+      function renderAll() {
+        renderUsers();
+        renderAgents();
+        renderSkills();
+        renderContracts();
+        renderErrors();
+      }
+
+      // Navigation changes the visible view without leaving the page.
+      const titles = {
+        dashboard: "Dashboard",
+        users: "User Management",
+        agents: "Agent Management",
+        skills: "Skills",
+        contracts: "Agent Contracts",
+        errors: "Error Log",
+      };
+      document.querySelectorAll(".nav-link").forEach((button) =>
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".nav-link").forEach((link) => {
+            link.removeAttribute("aria-current");
+            link.className = navClasses(false);
+          });
+          button.setAttribute("aria-current", "page");
+          button.className = navClasses(true);
+          document
+            .querySelectorAll(".view")
+            .forEach((view) =>
+              view.classList.toggle(
+                "hidden",
+                view.dataset.section !== button.dataset.view,
+              ),
+            );
+          document.getElementById("page-title").textContent =
+            titles[button.dataset.view];
+          closeMenu();
+        }),
+      );
+      function navClasses(active) {
+        return `nav-link shrink-0 rounded px-3 py-2 text-left text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-700 md:w-full ${active ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900" : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:hover:text-white"}`;
+      }
+      document
+        .querySelectorAll(".nav-link")
+        .forEach(
+          (link) =>
+            (link.className = navClasses(link.hasAttribute("aria-current"))),
+        );
+
+      // Theme preference persists when storage is available; the root class controls Tailwind dark utilities.
+      const themeButton = document.getElementById("theme-toggle");
+      let savedTheme = null;
+      try {
+        savedTheme = localStorage.getItem("agenthub-theme");
+      } catch (_) {
+        /* Storage may be unavailable. */
+      }
+      if (
+        savedTheme === "dark" ||
+        (!savedTheme &&
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      )
+        document.documentElement.classList.add("dark");
+      function updateThemeLabel() {
+        const dark = document.documentElement.classList.contains("dark");
+        themeButton.setAttribute("aria-pressed", String(dark));
+        document.getElementById("theme-label").textContent = dark
+          ? "Light mode"
+          : "Dark mode";
+      }
+      updateThemeLabel();
+      themeButton.addEventListener("click", () => {
+        document.documentElement.classList.toggle("dark");
+        updateThemeLabel();
+        try {
+          localStorage.setItem(
+            "agenthub-theme",
+            document.documentElement.classList.contains("dark")
+              ? "dark"
+              : "light",
+          );
+        } catch (_) {
+          /* Continue without persistence. */
+        }
+      });
+
+      // Context-specific actions populate the shared menu surface.
+      const actionSets = {
+        user: [
+          { label: "View detail", action: "detail" },
+          { label: "Delete", action: "delete" },
+        ],
+        agent: [
+          { label: "Configure", action: "configure" },
+          { label: "Delete", action: "delete" },
+        ],
+        skill: [
+          { label: "View detail", action: "detail" },
+          { label: "Delete", action: "delete" },
+        ],
+        contract: (index) =>
+          contracts[index].status === "Active"
+            ? [
+                { label: "View detail", action: "detail" },
+                { label: "Cancel contract", action: "cancel" },
+              ]
+            : [
+                { label: "View detail", action: "detail" },
+                { label: "Copy contract ID", action: "copy" },
+              ],
+        error: (index) => [
+          { label: "View detail", action: "detail" },
+          {
+            label: errors[index].resolved
+              ? "Already resolved"
+              : "Mark as resolved",
+            action: "resolve",
+            disabled: errors[index].resolved,
+          },
+        ],
+      };
+      document.addEventListener("click", (event) => {
+        const trigger = event.target.closest(".menu-trigger");
+        if (trigger) {
+          const wrap = trigger.parentElement;
+          if (openMenu === wrap) {
+            closeMenu();
+            return;
+          }
+          closeMenu();
+          openMenu = wrap;
+          const menu = wrap.querySelector(".action-menu");
+          const { kind, id } = trigger.dataset;
+          const actions =
+            typeof actionSets[kind] === "function"
+              ? actionSets[kind](Number(id))
+              : actionSets[kind];
+          menu.innerHTML = actions
+            .map(
+              (item) =>
+                `<button type="button" role="menuitem" data-action="${item.action}" ${item.disabled ? "disabled" : ""} class="block w-full px-3 py-2 text-left text-sm hover:bg-neutral-100 focus:bg-neutral-100 focus:outline-none disabled:cursor-default disabled:opacity-50 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800">${item.label}</button>`,
+            )
+            .join("");
+          menu.classList.remove("hidden");
+          trigger.setAttribute("aria-expanded", "true");
+          menu.querySelector("button:not(:disabled)")?.focus();
+          event.stopPropagation();
+          return;
+        }
+        if (openMenu && !event.target.closest(".action-menu")) closeMenu();
+        const item = event.target.closest(".action-menu [data-action]");
+        if (item && openMenu) {
+          const triggerEl = openMenu.querySelector(".menu-trigger");
+          const kind = triggerEl.dataset.kind;
+          const index = Number(triggerEl.dataset.id);
+          const action = item.dataset.action;
+          closeMenu();
+          handleAction(kind, index, action, triggerEl);
+        }
+      });
+      function closeMenu(restoreFocus = false) {
+        if (!openMenu) return;
+        const trigger = openMenu.querySelector(".menu-trigger");
+        openMenu.querySelector(".action-menu").classList.add("hidden");
+        trigger.setAttribute("aria-expanded", "false");
+        openMenu = null;
+        if (restoreFocus) trigger.focus();
+      }
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          if (!backdrop.classList.contains("hidden")) closeDialog();
+          else closeMenu(true);
+        }
+      });
+
+      // Details, edit prototype, and destructive confirmations.
+      function detailRows(pairs) {
+        return `<dl class="grid grid-cols-[minmax(8rem,auto)_1fr] gap-x-4 gap-y-2">${pairs.map(([term, value]) => `<dt class="font-medium text-neutral-500 dark:text-neutral-400">${esc(term)}</dt><dd class="break-words">${value}</dd>`).join("")}</dl>`;
+      }
+      function showDialog(title, content, actions = []) {
+        priorFocus = document.activeElement;
+        document.getElementById("dialog-title").textContent = title;
+        document.getElementById("dialog-content").innerHTML = content;
+        document.getElementById("dialog-actions").innerHTML = actions
+          .map(
+            (action) =>
+              `<button type="button" data-dialog-action="${action.id}" class="rounded border px-4 py-2 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${action.primary ? "border-neutral-900 bg-neutral-900 text-white hover:bg-neutral-700 dark:border-white dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200" : "border-neutral-300 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"}">${esc(action.label)}</button>`,
+          )
+          .join("");
+        backdrop.classList.remove("hidden");
+        backdrop.classList.add("flex");
+        backdrop.setAttribute("aria-hidden", "false");
+        panel.focus();
+      }
+      function closeDialog() {
+        backdrop.classList.add("hidden");
+        backdrop.classList.remove("flex");
+        backdrop.setAttribute("aria-hidden", "true");
+        if (priorFocus?.isConnected) priorFocus.focus();
+      }
+      document
+        .getElementById("dialog-close")
+        .addEventListener("click", closeDialog);
+      backdrop.addEventListener("click", (event) => {
+        if (event.target === backdrop) closeDialog();
+      });
+      panel.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-dialog-action]");
+        if (!button) return;
+        const action = button.dataset.dialogAction;
+        const callback = dialogCallbacks[action];
+        if (callback) callback();
+        else if (action === "cancel") closeDialog();
+      });
+      let dialogCallbacks = {};
+      function confirmAction(title, message, confirmLabel, callback) {
+        dialogCallbacks = {
+          confirm: () => {
+            closeDialog();
+            callback();
+          },
+        };
+        showDialog(title, `<p>${message}</p>`, [
+          { id: "cancel", label: "Cancel" },
+          { id: "confirm", label: confirmLabel, primary: true },
+        ]);
+      }
+      function openUserDetail(user) {
+        showDialog(
+          `User detail: ${user.name}`,
+          detailRows([
+            ["Name", esc(user.name)],
+            ["Email", esc(user.email)],
+            ["Plan", esc(user.plan)],
+            [
+              "Status",
+              badge(user.status, user.status === "Active" ? "green" : "amber"),
+            ],
+            ["Company", esc(user.company)],
+            ["Joined", esc(user.joined)],
+            ["Assigned agents", esc(user.agents)],
+          ]),
+        );
+      }
+      function openAgentConfig(agent) {
+        showDialog(
+          `Configure ${agent.name}`,
+          `<p class="mb-3 text-neutral-600 dark:text-neutral-300">System prompt</p><label for="system-prompt" class="sr-only">${esc(agent.name)} system prompt</label><textarea id="system-prompt" rows="7" class="w-full rounded border border-neutral-300 bg-white p-3 text-sm leading-6 text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-700 dark:border-neutral-700 dark:bg-neutral-950 dark:text-neutral-100">${esc(agent.prompt)}</textarea>`,
+        );
+      }
+      function openSkillDetail(skill) {
+        const count = agents.filter((agent) =>
+          agent.skills.includes(skill.name),
+        ).length;
+        showDialog(
+          `Skill detail: ${skill.name}`,
+          detailRows([
+            ["Name", esc(skill.name)],
+            ["Description", esc(skill.description)],
+            ["Enabled agents", String(count)],
+          ]),
+        );
+      }
+      function openContractDetail(contract) {
+        const rows = contract.skills
+          .map(
+            (skill) =>
+              `<li class="flex justify-between gap-4 border-b border-neutral-200 py-2 last:border-0 dark:border-neutral-800"><span>${esc(skill.name)}</span><span class="font-medium">${money(skill.price)}</span></li>`,
+          )
+          .join("");
+        const content = `${detailRows([
+          ["Contract ID", `<span class="font-mono">${esc(contract.id)}</span>`],
+          ["Client", esc(contract.client)],
+          ["Agent", esc(contract.agent)],
+          ["Status", statusBadge(contract.status)],
+          ["Start date", esc(contract.start)],
+          ["End date", esc(contract.end)],
+        ])}<h3 class="mt-5 font-semibold">Contracted skills</h3><ul class="mt-2">${rows}</ul><p class="mt-3 flex justify-between border-t border-neutral-300 pt-3 font-semibold dark:border-neutral-700"><span>Total</span><span>${money(contractTotal(contract))}</span></p>`;
+        showDialog(`Contract detail: ${contract.id}`, content);
+      }
+      function openErrorDetail(error) {
+        showDialog(
+          `Error detail: ${error.id}`,
+          `${detailRows([
+            ["Timestamp", esc(error.time)],
+            ["Agent", esc(error.agent)],
+            [
+              "Severity",
+              badge(
+                error.severity,
+                error.severity === "Critical"
+                  ? "red"
+                  : error.severity === "Warning"
+                    ? "amber"
+                    : "blue",
+              ),
+            ],
+            [
+              "Status",
+              error.resolved ? badge("Resolved", "green") : "Unresolved",
+            ],
+            ["Description", esc(error.description)],
+          ])}<h3 class="mt-5 font-semibold">Execution trace</h3><pre class="mt-2 overflow-x-auto rounded bg-neutral-100 p-3 text-xs leading-5 dark:bg-neutral-950">${esc(error.trace)}</pre>`,
+        );
+      }
+      function handleAction(kind, index, action, source) {
+        if (kind === "user") {
+          const user = users[index];
+          if (action === "detail") openUserDetail(user);
+          if (action === "delete")
+            confirmAction(
+              "Delete user?",
+              `Delete <strong>${esc(user.name)}</strong>? This removes the user from the visible prototype table.`,
+              "Delete user",
+              () => {
+                users.splice(index, 1);
+                renderUsers();
+                notify(`${user.name} was deleted.`);
+              },
+            );
+        } else if (kind === "agent") {
+          const agent = agents[index];
+          if (action === "configure") openAgentConfig(agent);
+          if (action === "delete")
+            confirmAction(
+              "Delete agent?",
+              `Delete <strong>${esc(agent.name)}</strong>? This prototype action removes the agent from the visible list.`,
+              "Delete agent",
+              () => {
+                agents.splice(index, 1);
+                renderAll();
+                notify(`${agent.name} was deleted.`);
+              },
+            );
+        } else if (kind === "skill") {
+          const skill = skills[index];
+          if (action === "detail") openSkillDetail(skill);
+          if (action === "delete")
+            confirmAction(
+              "Delete skill?",
+              `Delete <strong>${esc(skill.name)}</strong>?`,
+              "Delete skill",
+              () => {
+                skills.splice(index, 1);
+                agents.forEach(
+                  (agent) =>
+                    (agent.skills = agent.skills.filter(
+                      (name) => name !== skill.name,
+                    )),
+                );
+                renderAll();
+                notify(`${skill.name} was deleted.`);
+              },
+            );
+        } else if (kind === "contract") {
+          const contract = contracts[index];
+          if (action === "detail") openContractDetail(contract);
+          if (action === "cancel")
+            confirmAction(
+              "Cancel contract?",
+              `Cancel contract <strong>${esc(contract.id)}</strong> for ${esc(contract.client)}?`,
+              "Cancel contract",
+              () => {
+                contract.status = "Cancelled";
+                renderContracts();
+                notify(`Contract ${contract.id} was cancelled.`);
+              },
+            );
+          if (action === "copy") {
+            if (navigator.clipboard?.writeText)
+              navigator.clipboard
+                .writeText(contract.id)
+                .then(() => notify(`Contract ID ${contract.id} copied.`))
+                .catch(() =>
+                  notify(
+                    `Contract ID: ${contract.id} (clipboard unavailable).`,
+                  ),
+                );
+            else notify(`Contract ID: ${contract.id} (clipboard unavailable).`);
+          }
+        } else if (kind === "error") {
+          const error = errors[index];
+          if (action === "detail") openErrorDetail(error);
+          if (action === "resolve") {
+            error.resolved = true;
+            renderErrors();
+            notify(`${error.id} marked as resolved.`);
+          }
+        }
+      }
+      document.addEventListener("click", (event) => {
+        const toggle = event.target.closest(".skill-toggle");
+        if (!toggle) return;
+        const list = document.getElementById(
+          toggle.getAttribute("aria-controls"),
+        );
+        const expanded = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!expanded));
+        toggle.firstChild.textContent = `${expanded ? "Show" : "Hide"} ${agents[Number(toggle.dataset.index)].skills.length} skills `;
+        list.classList.toggle("max-h-0", expanded);
+        list.classList.toggle("opacity-0", expanded);
+        list.classList.toggle("mt-0", expanded);
+        list.classList.toggle("max-h-40", !expanded);
+        list.classList.toggle("opacity-100", !expanded);
+        list.classList.toggle("mt-2", !expanded);
+        list.setAttribute("aria-hidden", String(expanded));
+        list.toggleAttribute("inert", expanded);
+      });
+      function notify(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.remove("hidden");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.add("hidden"), 3200);
+      }
+
+      // Keep keyboard dismissal predictable and provide a simple focus loop inside the modal.
+      panel.addEventListener("keydown", (event) => {
+        if (event.key !== "Tab") return;
+        const focusable = [
+          ...panel.querySelectorAll(
+            "button:not(:disabled), textarea, [href], input, select",
+          ),
+        ];
+        if (!focusable.length) {
+          event.preventDefault();
+          return;
+        }
+        const first = focusable[0],
+          last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+      renderAll();
+    </script>
+  </body>
+</html>
